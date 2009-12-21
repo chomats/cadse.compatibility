@@ -30,16 +30,16 @@ import java.util.UUID;
  * lecture � partir d'un string (environ 10 fois).
  * 
  * A class that represents an immutable universally unique identifier
- * (CompactUUID). A CompactUUID represents a 128-bit value.
+ * (UUID). A UUID represents a 128-bit value.
  * 
  * <p>
  * There exist different variants of these global identifiers. The methods of
  * this class are for manipulating the Leach-Salz variant, although the
- * constructors allow the creation of any variant of CompactUUID (described
+ * constructors allow the creation of any variant of UUID (described
  * below).
  * 
  * <p>
- * The layout of a variant 2 (Leach-Salz) CompactUUID is as follows:
+ * The layout of a variant 2 (Leach-Salz) UUID is as follows:
  * 
  * The most significant long consists of the following unsigned fields:
  * 
@@ -60,29 +60,29 @@ import java.util.UUID;
  * 
  * <p>
  * The variant field contains a value which identifies the layout of the
- * <tt>CompactUUID</tt>. The bit layout described above is valid only for a
- * <tt>CompactUUID</tt> with a variant value of 2, which indicates the
+ * <tt>UUID</tt>. The bit layout described above is valid only for a
+ * <tt>UUID</tt> with a variant value of 2, which indicates the
  * Leach-Salz variant.
  * 
  * <p>
  * The version field holds a value that describes the type of this
- * <tt>CompactUUID</tt>. There are four different basic types of
- * CompactUUIDs: time-based, DCE security, name-based, and randomly generated
- * CompactUUIDs. These types have a version value of 1, 2, 3 and 4,
+ * <tt>UUID</tt>. There are four different basic types of
+ * UUIDs: time-based, DCE security, name-based, and randomly generated
+ * UUIDs. These types have a version value of 1, 2, 3 and 4,
  * respectively.
  * 
  * <p>
- * For more information including algorithms used to create <tt>CompactUUID</tt>s,
+ * For more information including algorithms used to create <tt>UUID</tt>s,
  * see the Internet-Draft <a
- * href="http://www.ietf.org/internet-drafts/draft-mealling-uuid-urn-03.txt">CompactUUIDs
+ * href="http://www.ietf.org/internet-drafts/draft-mealling-uuid-urn-03.txt">UUIDs
  * and GUIDs</a> or the standards body definition at <a
  * href="http://www.iso.ch/cate/d2229.html">ISO/IEC 11578:1996</a>.
  * 
  * @version 1.14, 07/12/04
  * @since 1.5
  */
-public final class CompactUUID implements java.io.Serializable,
-		Comparable<CompactUUID> {
+public final class UUID implements java.io.Serializable,
+		Comparable<UUID> {
 
 	
 	
@@ -92,7 +92,7 @@ public final class CompactUUID implements java.io.Serializable,
 	private static final long serialVersionUID = 5586287384551133835L;
 
 	/*
-	 * The most significant 64 bits of this CompactUUID.
+	 * The most significant 64 bits of this UUID.
 	 * 
 	 * @serial
 	 */
@@ -100,7 +100,7 @@ public final class CompactUUID implements java.io.Serializable,
 	private final long mostSigBits;
 
 	/*
-	 * The least significant 64 bits of this CompactUUID.
+	 * The least significant 64 bits of this UUID.
 	 * 
 	 * @serial
 	 */
@@ -109,7 +109,7 @@ public final class CompactUUID implements java.io.Serializable,
 
 	/*
 	 * The random number generator used by this class to create random based
-	 * CompactUUIDs.
+	 * UUIDs.
 	 */
 	/** The number generator. */
 	private static volatile SecureRandom numberGenerator = null;
@@ -122,10 +122,10 @@ public final class CompactUUID implements java.io.Serializable,
 	 * @param name
 	 *            the name
 	 */
-	public CompactUUID(String name) throws IllegalArgumentException {
+	public UUID(String name) throws IllegalArgumentException {
 		char[] buf = name.toCharArray();
 		if (buf.length != 36)
-			throw new IllegalArgumentException("Invalid CompactUUID string: " + name);
+			throw new IllegalArgumentException("Invalid UUID string: " + name);
 		
 		long _mostSigBits = decode(buf, 0, 8);
 		_mostSigBits <<= 16;
@@ -177,7 +177,7 @@ public final class CompactUUID implements java.io.Serializable,
 
 }
 	/*
-	 * Private constructor which uses a byte array to construct the new CompactUUID.
+	 * Private constructor which uses a byte array to construct the new UUID.
 	 */
 	/**
 	 * Instantiates a new compact uuid.
@@ -185,7 +185,7 @@ public final class CompactUUID implements java.io.Serializable,
 	 * @param data
 	 *            the data
 	 */
-	private CompactUUID(byte[] data) {
+	private UUID(byte[] data) {
 		long msb = 0;
 		long lsb = 0;
 		assert data.length == 16;
@@ -203,36 +203,36 @@ public final class CompactUUID implements java.io.Serializable,
 	 * @param uuid
 	 *            the uuid
 	 */
-	public CompactUUID(UUID uuid) {
+	public UUID(UUID uuid) {
 		this(uuid.getMostSignificantBits(), uuid.getLeastSignificantBits());
 	}
 	
 	/**
-	 * Constructs a new <tt>CompactUUID</tt> using the specified data.
+	 * Constructs a new <tt>UUID</tt> using the specified data.
 	 * <tt>mostSigBits</tt> is used for the most significant 64 bits of the
-	 * <tt>CompactUUID</tt> and <tt>leastSigBits</tt> becomes the least
-	 * significant 64 bits of the <tt>CompactUUID</tt>.
+	 * <tt>UUID</tt> and <tt>leastSigBits</tt> becomes the least
+	 * significant 64 bits of the <tt>UUID</tt>.
 	 * 
 	 * @param mostSigBits
 	 *            the most sig bits
 	 * @param leastSigBits
 	 *            the least sig bits
 	 */
-	public CompactUUID(long mostSigBits, long leastSigBits) {
+	public UUID(long mostSigBits, long leastSigBits) {
 		this.mostSigBits = mostSigBits;
 		this.leastSigBits = leastSigBits;
 	}
 
 	/**
 	 * Static factory to retrieve a type 4 (pseudo randomly generated)
-	 * CompactUUID.
+	 * UUID.
 	 * 
-	 * The <code>CompactUUID</code> is generated using a cryptographically
+	 * The <code>UUID</code> is generated using a cryptographically
 	 * strong pseudo random number generator.
 	 * 
-	 * @return a randomly generated <tt>CompactUUID</tt>.
+	 * @return a randomly generated <tt>UUID</tt>.
 	 */
-	public static CompactUUID randomUUID() {
+	public static UUID randomUUID() {
 		SecureRandom ng = numberGenerator;
 		if (ng == null) {
 			numberGenerator = ng = new SecureRandom();
@@ -244,19 +244,19 @@ public final class CompactUUID implements java.io.Serializable,
 		randomBytes[6] |= 0x40; /* set to version 4 */
 		randomBytes[8] &= 0x3f; /* clear variant */
 		randomBytes[8] |= 0x80; /* set to IETF variant */
-		return new CompactUUID(randomBytes);
+		return new UUID(randomBytes);
 	}
 
 	/**
-	 * Static factory to retrieve a type 3 (name based) <tt>CompactUUID</tt>
+	 * Static factory to retrieve a type 3 (name based) <tt>UUID</tt>
 	 * based on the specified byte array.
 	 * 
 	 * @param name
-	 *            a byte array to be used to construct a <tt>CompactUUID</tt>.
+	 *            a byte array to be used to construct a <tt>UUID</tt>.
 	 * 
-	 * @return a <tt>CompactUUID</tt> generated from the specified array.
+	 * @return a <tt>UUID</tt> generated from the specified array.
 	 */
-	public static CompactUUID nameUUIDFromBytes(byte[] name) {
+	public static UUID nameUUIDFromBytes(byte[] name) {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("MD5");
@@ -268,33 +268,33 @@ public final class CompactUUID implements java.io.Serializable,
 		md5Bytes[6] |= 0x30; /* set to version 3 */
 		md5Bytes[8] &= 0x3f; /* clear variant */
 		md5Bytes[8] |= 0x80; /* set to IETF variant */
-		return new CompactUUID(md5Bytes);
+		return new UUID(md5Bytes);
 	}
 
 	/**
-	 * Creates a <tt>CompactUUID</tt> from the string standard representation
+	 * Creates a <tt>UUID</tt> from the string standard representation
 	 * as described in the {@link #toString} method.
 	 * 
 	 * @param name
-	 *            a string that specifies a <tt>CompactUUID</tt>.
+	 *            a string that specifies a <tt>UUID</tt>.
 	 * 
-	 * @return a <tt>CompactUUID</tt> with the specified value.
+	 * @return a <tt>UUID</tt> with the specified value.
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if name does not conform to the string representation as
 	 *             described in {@link #toString}.
 	 */
-	public static CompactUUID fromString(String name) {
-		return new CompactUUID(name);
+	public static UUID fromString(String name) {
+		return new UUID(name);
 	}
 
 	// Field Accessor Methods
 
 	/**
-	 * Returns the least significant 64 bits of this CompactUUID's 128 bit
+	 * Returns the least significant 64 bits of this UUID's 128 bit
 	 * value.
 	 * 
-	 * @return the least significant 64 bits of this CompactUUID's 128 bit
+	 * @return the least significant 64 bits of this UUID's 128 bit
 	 *         value.
 	 */
 	public long getLeastSignificantBits() {
@@ -302,9 +302,9 @@ public final class CompactUUID implements java.io.Serializable,
 	}
 
 	/**
-	 * Returns the most significant 64 bits of this CompactUUID's 128 bit value.
+	 * Returns the most significant 64 bits of this UUID's 128 bit value.
 	 * 
-	 * @return the most significant 64 bits of this CompactUUID's 128 bit value.
+	 * @return the most significant 64 bits of this UUID's 128 bit value.
 	 */
 	public long getMostSignificantBits() {
 		return mostSigBits;
@@ -316,13 +316,13 @@ public final class CompactUUID implements java.io.Serializable,
 
 	/**
 	 * Returns a <code>String</code> object representing this
-	 * <code>CompactUUID</code>.
+	 * <code>UUID</code>.
 	 * 
 	 * <p>
-	 * The CompactUUID string representation is as described by this BNF :
+	 * The UUID string representation is as described by this BNF :
 	 * 
 	 * <pre>
-	 * CompactUUID                   = &lt;time_low&gt; &quot;-&quot; &lt;time_mid&gt; &quot;-&quot;
+	 * UUID                   = &lt;time_low&gt; &quot;-&quot; &lt;time_mid&gt; &quot;-&quot;
 	 * &lt;time_high_and_version&gt; &quot;-&quot;
 	 * &lt;variant_and_sequence&gt; &quot;-&quot;
 	 * &lt;node&gt;
@@ -338,7 +338,7 @@ public final class CompactUUID implements java.io.Serializable,
 	 * | &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot;
 	 * </pre>
 	 * 
-	 * @return a string representation of this <tt>CompactUUID</tt>.
+	 * @return a string representation of this <tt>UUID</tt>.
 	 */
 	@Override
 	public String toString() {
@@ -390,9 +390,9 @@ public final class CompactUUID implements java.io.Serializable,
     }
 
 	/**
-	 * Returns a hash code for this <code>CompactUUID</code>.
+	 * Returns a hash code for this <code>UUID</code>.
 	 * 
-	 * @return a hash code value for this <tt>CompactUUID</tt>.
+	 * @return a hash code value for this <tt>UUID</tt>.
 	 */
 	@Override
 	public int hashCode() {
@@ -402,8 +402,8 @@ public final class CompactUUID implements java.io.Serializable,
 	/**
 	 * Compares this object to the specified object. The result is <tt>true</tt>
 	 * if and only if the argument is not <tt>null</tt>, is a
-	 * <tt>CompactUUID</tt> object, has the same variant, and contains the
-	 * same value, bit for bit, as this <tt>CompactUUID</tt>.
+	 * <tt>UUID</tt> object, has the same variant, and contains the
+	 * same value, bit for bit, as this <tt>UUID</tt>.
 	 * 
 	 * @param obj
 	 *            the object to compare with.
@@ -413,32 +413,32 @@ public final class CompactUUID implements java.io.Serializable,
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof CompactUUID))
+		if (!(obj instanceof UUID))
 			return false;
 
-		CompactUUID id = (CompactUUID) obj;
+		UUID id = (UUID) obj;
 		return (mostSigBits == id.mostSigBits && leastSigBits == id.leastSigBits);
 	}
 
 	// Comparison Operations
 
 	/**
-	 * Compares this CompactUUID with the specified CompactUUID.
+	 * Compares this UUID with the specified UUID.
 	 * 
 	 * <p>
-	 * The first of two CompactUUIDs follows the second if the most significant
-	 * field in which the CompactUUIDs differ is greater for the first
-	 * CompactUUID.
+	 * The first of two UUIDs follows the second if the most significant
+	 * field in which the UUIDs differ is greater for the first
+	 * UUID.
 	 * 
 	 * @param val
-	 *            <tt>CompactUUID</tt> to which this <tt>CompactUUID</tt> is
+	 *            <tt>UUID</tt> to which this <tt>UUID</tt> is
 	 *            to be compared.
 	 * 
-	 * @return -1, 0 or 1 as this <tt>CompactUUID</tt> is less than, equal to,
+	 * @return -1, 0 or 1 as this <tt>UUID</tt> is less than, equal to,
 	 *         or greater than <tt>val</tt>.
 	 */
-	public int compareTo(CompactUUID val) {
-		// The ordering is intentionally set up so that the CompactUUIDs
+	public int compareTo(UUID val) {
+		// The ordering is intentionally set up so that the UUIDs
 		// can simply be numerically compared as two numbers
 		return (this.mostSigBits < val.mostSigBits ? -1
 				: (this.mostSigBits > val.mostSigBits ? 1
@@ -449,7 +449,7 @@ public final class CompactUUID implements java.io.Serializable,
 	
 	
 //	public static void main(String[] args) {
-//		CompactUUID  uuid = randomUUID();
+//		UUID  uuid = randomUUID();
 //		UUID uuid2 = new UUID(uuid.mostSigBits, uuid.leastSigBits);
 //		long st1 = System.currentTimeMillis();
 //		for (int i = 0; i < 10000; i++) {
@@ -474,9 +474,9 @@ public final class CompactUUID implements java.io.Serializable,
 	
 //	public static void main(String[] args) {
 //		for (int i = 0; i < 100; i++) {
-//			CompactUUID uuid = randomUUID();
+//			UUID uuid = randomUUID();
 //			String st = uuid.toString();
-//			CompactUUID uuid2 = new CompactUUID(st);
+//			UUID uuid2 = new UUID(st);
 //			System.out.println("result  : " + uuid.equals(uuid2));
 //		}
 //	}
@@ -488,7 +488,7 @@ public final class CompactUUID implements java.io.Serializable,
 //		}
 //		long st1 = System.currentTimeMillis();
 //		for (int i = 0; i < st.length; i++) {
-//			new CompactUUID(st[i]);
+//			new UUID(st[i]);
 //		}
 //		long st2 = System.currentTimeMillis();
 //		for (int i = 0; i < st.length ; i++) {
