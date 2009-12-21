@@ -81,8 +81,8 @@ import java.util.UUID;
  * @version 1.14, 07/12/04
  * @since 1.5
  */
-public final class UUID implements java.io.Serializable,
-		Comparable<UUID> {
+public final class CompactUUID implements java.io.Serializable,
+		Comparable<CompactUUID> {
 
 	
 	
@@ -122,7 +122,7 @@ public final class UUID implements java.io.Serializable,
 	 * @param name
 	 *            the name
 	 */
-	public UUID(String name) throws IllegalArgumentException {
+	public CompactUUID(String name) throws IllegalArgumentException {
 		char[] buf = name.toCharArray();
 		if (buf.length != 36)
 			throw new IllegalArgumentException("Invalid UUID string: " + name);
@@ -185,7 +185,7 @@ public final class UUID implements java.io.Serializable,
 	 * @param data
 	 *            the data
 	 */
-	private UUID(byte[] data) {
+	private CompactUUID(byte[] data) {
 		long msb = 0;
 		long lsb = 0;
 		assert data.length == 16;
@@ -203,7 +203,7 @@ public final class UUID implements java.io.Serializable,
 	 * @param uuid
 	 *            the uuid
 	 */
-	public UUID(UUID uuid) {
+	public CompactUUID(CompactUUID uuid) {
 		this(uuid.getMostSignificantBits(), uuid.getLeastSignificantBits());
 	}
 	
@@ -218,7 +218,7 @@ public final class UUID implements java.io.Serializable,
 	 * @param leastSigBits
 	 *            the least sig bits
 	 */
-	public UUID(long mostSigBits, long leastSigBits) {
+	public CompactUUID(long mostSigBits, long leastSigBits) {
 		this.mostSigBits = mostSigBits;
 		this.leastSigBits = leastSigBits;
 	}
@@ -232,7 +232,7 @@ public final class UUID implements java.io.Serializable,
 	 * 
 	 * @return a randomly generated <tt>UUID</tt>.
 	 */
-	public static UUID randomUUID() {
+	public static CompactUUID randomUUID() {
 		SecureRandom ng = numberGenerator;
 		if (ng == null) {
 			numberGenerator = ng = new SecureRandom();
@@ -244,7 +244,7 @@ public final class UUID implements java.io.Serializable,
 		randomBytes[6] |= 0x40; /* set to version 4 */
 		randomBytes[8] &= 0x3f; /* clear variant */
 		randomBytes[8] |= 0x80; /* set to IETF variant */
-		return new UUID(randomBytes);
+		return new CompactUUID(randomBytes);
 	}
 
 	/**
@@ -256,7 +256,7 @@ public final class UUID implements java.io.Serializable,
 	 * 
 	 * @return a <tt>UUID</tt> generated from the specified array.
 	 */
-	public static UUID nameUUIDFromBytes(byte[] name) {
+	public static CompactUUID nameUUIDFromBytes(byte[] name) {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("MD5");
@@ -268,7 +268,7 @@ public final class UUID implements java.io.Serializable,
 		md5Bytes[6] |= 0x30; /* set to version 3 */
 		md5Bytes[8] &= 0x3f; /* clear variant */
 		md5Bytes[8] |= 0x80; /* set to IETF variant */
-		return new UUID(md5Bytes);
+		return new CompactUUID(md5Bytes);
 	}
 
 	/**
@@ -284,8 +284,8 @@ public final class UUID implements java.io.Serializable,
 	 *             if name does not conform to the string representation as
 	 *             described in {@link #toString}.
 	 */
-	public static UUID fromString(String name) {
-		return new UUID(name);
+	public static CompactUUID fromString(String name) {
+		return new CompactUUID(name);
 	}
 
 	// Field Accessor Methods
@@ -413,10 +413,10 @@ public final class UUID implements java.io.Serializable,
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof UUID))
+		if (!(obj instanceof CompactUUID))
 			return false;
 
-		UUID id = (UUID) obj;
+		CompactUUID id = (CompactUUID) obj;
 		return (mostSigBits == id.mostSigBits && leastSigBits == id.leastSigBits);
 	}
 
@@ -437,7 +437,7 @@ public final class UUID implements java.io.Serializable,
 	 * @return -1, 0 or 1 as this <tt>UUID</tt> is less than, equal to,
 	 *         or greater than <tt>val</tt>.
 	 */
-	public int compareTo(UUID val) {
+	public int compareTo(CompactUUID val) {
 		// The ordering is intentionally set up so that the UUIDs
 		// can simply be numerically compared as two numbers
 		return (this.mostSigBits < val.mostSigBits ? -1
