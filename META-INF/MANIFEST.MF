@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CADSE Compatibility Plug-in
+Bundle-SymbolicName: fr.imag.adele.cadse.compatibility
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: ADELE
+Export-Package: fede.workspace.domain;version="1.0.0",
+ fede.workspace.domain.root.type;version="1.0.0",
+ fr.imag.adele.cadseg.model.type;version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
