@@ -1,10 +1,17 @@
 Manifest-Version: 1.0
+Export-Package: fede.workspace.domain,fede.workspace.domain.root.type,
+ fr.imag.adele.cadseg.model.type
+Built-By: chomats
+Tool: Bnd-0.0.357
+Bundle-Name: fr.imag.adele.cadse.compatility
+Created-By: Apache Maven Bundle Plugin
+Bundle-Vendor: Adele/LIG/ Grenoble University, France
+Build-Jdk: 1.6.0_17
+Bundle-Version: 2.3.0.SNAPSHOT
+Bnd-LastModified: 1260966185888
 Bundle-ManifestVersion: 2
-Bundle-Name: CADSE Compatibility Plug-in
-Bundle-SymbolicName: fr.imag.adele.cadse.compatibility
-Bundle-Version: 1.0.0.qualifier
-Bundle-Vendor: ADELE
-Export-Package: fede.workspace.domain;version="1.0.0",
- fede.workspace.domain.root.type;version="1.0.0",
- fr.imag.adele.cadseg.model.type;version="1.0.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: fede.workspace.domain,fede.workspace.domain.root.type,
+ fr.imag.adele.cadseg.model.type
+Bundle-DocURL: http://www-adele.imag.fr/
+Bundle-SymbolicName: fr.imag.adele.cadse.compatility
+
