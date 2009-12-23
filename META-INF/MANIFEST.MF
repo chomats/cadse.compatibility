@@ -8,7 +8,7 @@ Created-By: Apache Maven Bundle Plugin
 Bundle-Vendor: Adele/LIG/ Grenoble University, France
 Build-Jdk: 1.6.0_17
 Bundle-Version: 2.3.0.SNAPSHOT
-Bnd-LastModified: 1261488085764
+Bnd-LastModified: 1261565756522
 Bundle-ManifestVersion: 2
 Import-Package: fede.workspace.domain,fede.workspace.domain.root.type,
  fr.imag.adele.cadseg.model.type
